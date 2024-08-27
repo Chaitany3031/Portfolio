@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio 5</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        /* Google Material Design Colors */
+        :root {
+            --primary-color: #6200ea;
+            /* Deep Purple 500 */
+            --primary-light: #bb86fc;
+            /* Purple 200 */
+            --primary-dark: #3700b3;
+            /* Deep Purple 700 */
+            --secondary-color: #03dac6;
+            /* Teal 200 */
+            --background-color: #f5f5f5;
+            /* Gray 100 */
+            --text-color: #333;
+            /* Almost Black */
+            --accent-color: #ff4081;
+            /* Pink 300 */
+        }
+
+        /* Form container */
+        #sheetdb-form {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form title */
+        #sheetdb-form h3 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Input boxes */
+        #sheetdb-form .inputBox {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        #sheetdb-form .inputBox input {
+            width: 85%;
+            padding: 12px 15px 12px 40px;
+            /* Added padding on the left */
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: border-color 0.3s ease;
+        }
+
+        #sheetdb-form .inputBox input:focus {
+            border-color: #6200ea;
+        }
+
+        /* Icons inside input fields */
+        #sheetdb-form .inputBox span {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            /* Adjusted position of the icons */
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: #6200ea;
+        }
+
+        /* Submit button */
+        #sheetdb-form .btn {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: #6200ea;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #sheetdb-form .btn:hover {
+            background-color: #6200ea;
+        }
+
+        /* Modal styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: black;
+            text-decoration: none;
+        }
+
+        #submissionMessage {
+            font-size: 20px;
+            color: #333;
+        }
+
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        header,
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        header h1,
+        footer p {
+            margin: 0;
+        }
+
+        nav a {
+            margin: 0 15px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: var(--secondary-color);
+        }
+
+        section {
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 1000px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        section h2 {
+            color: var(--primary-dark);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 5px;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        .experience,
+        .skills,
+        .projects {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .experience article,
+        .skills article,
+        .projects article {
+            border: 2px solid var(--primary-light);
+            padding: 10px;
+            margin-bottom: 20px;
+            width: 48%;
+            box-sizing: border-box;
+            background: var(--background-color);
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .experience article:hover,
+        .skills article:hover,
+        .projects article:hover {
+            transform: scale(1.05);
+            border-color: var(--accent-color);
+        }
+
+        .projects img {
+            max-width: 25%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+            margin: auto;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid var(--primary-light);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .contact-form button {
+            padding: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .contact-form button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+
+            .experience article,
+            .skills article,
+            .projects article {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 500px) {
+            nav a {
+                display: block;
+                margin: 5px 0;
+            }
+
+            header,
+            footer {
+                text-align: left;
+                padding: 10px 20px;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>🧑‍💻Chaitanya Mhatre </h1>
+        <nav>
+            <a href="#about">About Me 🤔</a>
+            <a href="#experience">Education 💼</a>
+            <a href="#skills">Skills 🛠️</a>
+            <a href="#portfolio">My Work 💻</a>
+            <a href="#sheetdb-form">Contact 📬</a>
+        </nav>
+    </header>
+
+    <section id="about">
+        <h2>About Me</h2>
+        <p>Welcome to my portfolio! I am an emerging and learner in web developing with a passion for creating modern
+            and
+            responsive websites. 🚀
+        </p>
+    </section>
+
+    <section id="experience">
+        <h2>Education 💼</h2>
+        <div class="experience">
+            <article>
+                <h3>BCA @ CSMU Panvel Navi Mumbai 🖥️</h3>
+                <p>Aug 2021 - 2024</p>
+                <p>Graduated wih 57% . CGPA - 6.58</p>
+            </article>
+            <article>
+                <h3>MCA @ CSMU Panvel Navi Mumbai🌐</h3>
+                <p>Aug 2024 - Present</p>
+                <p>Learning and mastering various technologies which will be useful for future acadamics.
+                </p>
+            </article>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2>Skills 🛠️</h2>
+        <div class="skills">
+            <article>
+                <h3>HTML5 & CSS3 📄</h3>
+                <p>Proficient in creating semantic and accessible HTML documents, styling with modern CSS techniques
+                    including Flexbox and Grid.</p>
+            </article>
+            <article>
+                <h3>JavaScript & React ⚛️</h3>
+                <p>Learning to build interactive user interfaces with React. Familiar with ES6+ features and
+                    modern JavaScript frameworks.</p>
+            </article>
+            <article>
+                <h3>Responsive Design 📱</h3>
+                <p>Adept at designing responsive websites that work across a variety of devices using media queries and
+                    mobile-first design principles.</p>
+            </article>
+            <article>
+                <h3>Version Control with Git 🌳</h3>
+                <p>Comfortable with Git for version control, including branching, merging, and collaborating on projects
+                    using GitHub or GitLab.</p>
+            </article>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <h2>My Projects 🎨</h2>
+        <div class="projects">
+            <article>
+                <h3>Project 1 🎯</h3>
+                <img src="../images/p1.png" alt="Project 1">
+                <p>This is a description of my first project. 💡</p>
+            </article>
+            <article>
+                <h3>Project 2 🛠️</h3>
+                <img src="../images/p2.png" alt="Project 2">
+                <p>This is a description of my second project. 🔧</p>
+            </article>
+            <article>
+                <h3>Project 3 🌐</h3>
+                <img src="../images/p3.png" alt="Project 3">
+                <p>This is a description of my third project. 🌍</p>
+            </article>
+        </div>
+    </section>
+
+    <!-- <section id="contact">
+        <h2>Contact Me 🤝</h2>
+        <form class="contact-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+            <button type="submit">Send 🚀</button>
+        </form>
+    </section> -->
+
+    <form id="sheetdb-form" action="https://sheetdb.io/api/v1/vib7hqir9nqtw" method="post">
+        <h3>Get in Touch 🤞</h3>
+        <div class="inputBox">
+            <span class="fas fa-user"></span>
+            <input type="text" placeholder="name" name="data[NAME]" id="uname" />
+        </div>
+        <div class="inputBox">
+            <span class="fas fa-envelope"></span>
+            <input type="email" placeholder="email" name="data[EMAIL]" id="uemail" />
+        </div>
+        <div class="inputBox">
+            <span class="fas fa-phone"></span>
+            <input type="number" placeholder="number" name="data[PHONE]" id="unumber" />
+        </div>
+
+        <div class="inputBox">
+            <span class="fas fa-comments"></span>
+            <input type="text" placeholder="message" name="data[MESSAGE]" id="umsg" />
+        </div>
+        <input type="submit" value="contact now" class="btn" />
+    </form>
+
+    <!-- Custom modal -->
+    <div id="submissionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <p id="submissionMessage"></p>
+        </div>
+    </div>
+
+    <script>
+        var form = document.getElementById('sheetdb-form');
+        var modal = document.getElementById('submissionModal');
+        var closeBtn = document.querySelector('.close-btn');
+        var submissionMessage = document.getElementById('submissionMessage');
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            fetch(form.action, {
+                method: "POST",
+                body: new FormData(document.getElementById("sheetdb-form")),
+            }).then(response => response.json())
+                .then(html => {
+                    submissionMessage.textContent = '😊 Thank you, for Dropping a Message ! ' + document.getElementById('uname').value;
+                    modal.style.display = "flex";
+                });
+        });
+
+        // Close the modal when clicking the close button
+        closeBtn.addEventListener("click", function () {
+            modal.style.display = "none";
+            window.location.href = '';  // Optional: reload the page
+            location.reload();
+        });
+
+        // Close the modal when clicking anywhere outside the modal content
+        window.addEventListener("click", function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                window.location.href = '';  // Optional: reload the page
+                location.reload();
+            }
+        });
+
+    </script>
+
+    <footer>
+        <p>Connect with me on <a href="https://www.linkedin.com/in/chaitanya-mhatre-142601244/">LinkedIn</a> | <a
+                href="https://github.com/Chaitany3031">GitHub</a> 🌐
+        </p>
+
+    </footer>
+</body>
+
+</html>
